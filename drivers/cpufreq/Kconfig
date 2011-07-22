@@ -125,14 +125,14 @@ config CPU_FREQ_DEFAULT_GOV_LAGFREE
           driver. Fallback governor will be the performance governor.
 
 
-config CPU_FREQ_DEFAULT_GOV_INTERACTIVE
-	bool "interactive"
-	select CPU_FREQ_GOV_INTERACTIVE
+config CPU_FREQ_DEFAULT_GOV_INTERACTIVEX
+	bool "interactiveX"
+	select CPU_FREQ_GOV_INTERACTIVEX
 	help
-	  Use the CPUFreq governor 'interactive' as default. This allows
+	  Use the CPUFreq governor 'interactivex' as default. This allows
 	  you to get a full dynamic cpu frequency capable system by simply
 	  loading your cpufreq low-level hardware driver, using the
-	  'interactive' governor for latency-sensitive workloads.
+	  'interactivex' governor for latency-sensitive workloads.
 
 config CPU_FREQ_DEFAULT_GOV_SMARTASS2
 	bool "smartass2"
@@ -197,11 +197,10 @@ config CPU_FREQ_GOV_ONDEMAND
 
 	  If in doubt, say N.
 
-config CPU_FREQ_GOV_INTERACTIVE
-	tristate "'interactive' cpufreq policy governor"
-	help
-	  'interactive' - This driver adds a dynamic cpufreq policy governor
-	  designed for latency-sensitive workloads.
+config CPU_FREQ_GOV_INTERACTIVEX
+tristate "'interactiveX' cpufreq policy governor"
+  help
+    'interactiveX' - Modified version of interactive with sleep+wake code.
 
 config CPU_FREQ_GOV_CONSERVATIVE
 	tristate "'conservative' cpufreq governor"
