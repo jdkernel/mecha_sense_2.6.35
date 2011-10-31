@@ -836,8 +836,8 @@ static int __init cpufreq_smartass_init(void)
 	}
 
 	// Scale up is high priority
-	up_wq = alloc_workqueue("ksmartass_up", WQ_HIGHPRI, 1);
-	down_wq = alloc_workqueue("ksmartass_down", 0, 1);
+      up_wq = create_rt_workqueue("ksmartass_up");
+      down_wq = create_workqueue("ksmartass_down");
 	if (!up_wq || !down_wq)
 		return -ENOMEM;
 
@@ -866,4 +866,5 @@ module_exit(cpufreq_smartass_exit);
 MODULE_AUTHOR ("Erasmux");
 MODULE_DESCRIPTION ("'cpufreq_smartass2' - A smart cpufreq governor");
 MODULE_LICENSE ("GPL");
+
 
