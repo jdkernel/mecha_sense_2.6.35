@@ -94,7 +94,6 @@ struct clkctl_acpu_speed {
 static struct clock_state drv_state = { 0 };
 
 static struct cpufreq_frequency_table freq_table[] = {
-static struct cpufreq_frequency_table freq_table[] = {
 	{ 0, 245760 },
 	{ 1, 368640 },
 	{ 2, 768000 },
