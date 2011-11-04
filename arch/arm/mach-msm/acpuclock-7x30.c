@@ -548,8 +548,13 @@ void __init pll2_fixup(void)
 	u8 pll2_l;
 
 	pll2_l = readl(PLL2_L_VAL_ADDR) & 0xFF;
+	#ifdef CONFIG_ACPUCLOCK_OVERCLOCKING
+	speed = &acpu_freq_tbl[8];
+	cpu_freq = &freq_table[3];
+#else
 	speed = &acpu_freq_tbl[ARRAY_SIZE(acpu_freq_tbl)-2];
 	cpu_freq = &freq_table[ARRAY_SIZE(freq_table)-2];
+#endif
 
 	if (speed->acpu_clk_khz != 806400 || cpu_freq->frequency != 806400) {
 		pr_err("Frequency table fixups for PLL2 rate failed.\n");
