@@ -1179,8 +1179,6 @@ static int __cpufreq_remove_dev(struct sys_device *sys_dev)
 		cpufreq_driver->exit(data);
 	unlock_policy_rwsem_write(cpu);
 
-<<<<<<< HEAD
-=======
 #ifdef CONFIG_HOTPLUG_CPU
 	/* when the CPU which is the parent of the kobj is hotplugged
 	 * offline, check for siblings, and create cpufreq sysfs interface
@@ -1197,13 +1195,10 @@ static int __cpufreq_remove_dev(struct sys_device *sys_dev)
 	}
 #endif
 
->>>>>>> 576aac8... overclock code and cpufreq backport from linux 3.1
 	free_cpumask_var(data->related_cpus);
 	free_cpumask_var(data->cpus);
 	kfree(data);
-	per_cpu(cpufreq_cpu_data, cpu) = NULL;
 
-	cpufreq_debug_enable_ratelimit();
 	return 0;
 }
 
@@ -1995,3 +1990,4 @@ static int __init cpufreq_core_init(void)
 	return 0;
 }
 core_initcall(cpufreq_core_init);
+
