@@ -112,6 +112,14 @@ config CPU_FREQ_DEFAULT_GOV_CONSERVATIVE
 	  governor. If unsure have a look at the help section of the
 	  driver. Fallback governor will be the performance governor.
 
+config CPU_FREQ_DEFAULT_GOV_INTERACTIVEX
+	bool "interactiveX"
+	select CPU_FREQ_GOV_INTERACTIVEX
+	help
+	  Use the CPUFreq governor 'interactivex' as default. This allows
+	  you to get a full dynamic cpu frequency capable system by simply
+	  loading your cpufreq low-level hardware driver, using the
+	  'interactivex' governor for latency-sensitive workloads
 
 config CPU_FREQ_DEFAULT_GOV_LAGFREE
         bool "lagfree"
@@ -126,15 +134,6 @@ config CPU_FREQ_DEFAULT_GOV_LAGFREE
           driver. Fallback governor will be the performance governor.
 
 
-config CPU_FREQ_DEFAULT_GOV_INTERACTIVEX
-	bool "interactiveX"
-	select CPU_FREQ_GOV_INTERACTIVEX
-	help
-	  Use the CPUFreq governor 'interactivex' as default. This allows
-	  you to get a full dynamic cpu frequency capable system by simply
-	  loading your cpufreq low-level hardware driver, using the
-	  'interactivex' governor for latency-sensitive workloads.
-
 config CPU_FREQ_DEFAULT_GOV_INTERACTIVE
 	bool "interactive"
 	select CPU_FREQ_GOV_INTERACTIVE
@@ -142,7 +141,7 @@ config CPU_FREQ_DEFAULT_GOV_INTERACTIVE
 	  Use the CPUFreq governor 'interactive' as default. This allows
 	  you to get a full dynamic cpu frequency capable system by simply
 	  loading your cpufreq low-level hardware driver, using the
-	  'interactivex' governor for latency-sensitive workloads.
+	  'interactive' governor for latency-sensitive workloads.
 
 config CPU_FREQ_DEFAULT_GOV_SMARTASS2
 	bool "smartass2"
@@ -207,15 +206,16 @@ config CPU_FREQ_GOV_ONDEMAND
 
 	  If in doubt, say N.
 
+config CPU_FREQ_GOV_INTERACTIVE
+	tristate "'interactive' cpufreq policy governor"
+	help
+	  'interactive' - This driver adds a dynamic cpufreq policy governor
+	  designed for latency-sensitive workloads.
+
 config CPU_FREQ_GOV_INTERACTIVEX
 tristate "'interactiveX' cpufreq policy governor"
   help
     'interactiveX' - Modified version of interactive with sleep+wake code.
-
-config CPU_FREQ_GOV_INTERACTIVE
-tristate "'interactive' cpufreq policy governor"
-  help
-    'interactive' - No help for you.
 
 config CPU_FREQ_GOV_CONSERVATIVE
 	tristate "'conservative' cpufreq governor"
@@ -278,18 +278,6 @@ config CPU_FREQ_SAMPLING_LATENCY_MULTIPLIER
 	  Sampling latency rate multiplied by the cpu switch latency.
 	  Affects governor polling.
 
-<<<<<<< HEAD
-
-config CPU_FREQ_VDD_LEVELS
-		bool "CPU Vdd levels sysfs interface"
-		depends on CPU_FREQ_STAT
-		depends on ARCH_MSM7X30
-		default n
-		help
-		CPU Vdd levels sysfs interface
-
-endif	# CPU_FREQ
-=======
 config CPU_FREQ_VDD_LEVELS
     bool "CPU Vdd levels sysfs interface"
     depends on CPU_FREQ_STAT
@@ -316,4 +304,3 @@ endmenu
 endif
 endmenu
 
->>>>>>> 1bae4ab... overclock code and cpufreq backport from linux 3.1
