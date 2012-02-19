@@ -217,6 +217,12 @@ tristate "'interactiveX' cpufreq policy governor"
   help
     'interactiveX' - Modified version of interactive with sleep+wake code.
 
+config CPU_FREQ_GOV_ONDEMAND_2_PHASE
+	tristate "'2-phase' power-efficiency ondemand algorithm"
+	depends on CPU_FREQ_GOV_ONDEMAND
+	help
+	  '2-phase' - This driver adds a new algo to save power
+
 config CPU_FREQ_GOV_CONSERVATIVE
 	tristate "'conservative' cpufreq governor"
 	depends on CPU_FREQ
