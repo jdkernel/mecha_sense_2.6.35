@@ -29,8 +29,8 @@
  * It helps to keep variable names smaller, simpler
  */
 
-#define DEF_FREQUENCY_UP_THRESHOLD		(90)
-#define DEF_FREQUENCY_DOWN_THRESHOLD		(10)
+#define DEF_FREQUENCY_UP_THRESHOLD		(65)
+#define DEF_FREQUENCY_DOWN_THRESHOLD		(35)
 
 /*
  * The polling frequency of this governor depends on the capability of
@@ -48,7 +48,7 @@ static unsigned int min_sampling_rate;
 
 #define LATENCY_MULTIPLIER			(1000)
 #define MIN_LATENCY_MULTIPLIER			(100)
-#define DEF_SAMPLING_DOWN_FACTOR		(1)
+#define DEF_SAMPLING_DOWN_FACTOR		(3)
 #define MAX_SAMPLING_DOWN_FACTOR		(10)
 #define TRANSITION_LATENCY_LIMIT		(10 * 1000 * 1000)
 
@@ -92,7 +92,7 @@ static struct dbs_tuners {
 	.down_threshold = DEF_FREQUENCY_DOWN_THRESHOLD,
 	.sampling_down_factor = DEF_SAMPLING_DOWN_FACTOR,
 	.ignore_nice = 0,
-	.freq_step = 5,
+	.freq_step = 25,
 };
 
 static inline cputime64_t get_cpu_idle_time_jiffy(unsigned int cpu,
@@ -422,7 +422,7 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 	 * can support the current CPU usage without triggering the up
 	 * policy. To be safe, we focus 10 points under the threshold.
 	 */
-	if (max_load < (dbs_tuners_ins.down_threshold - 10)) {
+	if (max_load < (dbs_tuners_ins.down_threshold - 15)) {
 		freq_target = (dbs_tuners_ins.freq_step * policy->max) / 100;
 
 		this_dbs_info->requested_freq -= freq_target;
@@ -535,13 +535,9 @@ static int cpufreq_governor_dbs(struct cpufreq_policy *policy,
 			 */
 			min_sampling_rate =
 				MIN_SAMPLING_RATE_RATIO * jiffies_to_usecs(10);
-			/* Bring kernel and HW constraints together */
-			min_sampling_rate = max(min_sampling_rate,
-					MIN_LATENCY_MULTIPLIER * latency);
-			dbs_tuners_ins.sampling_rate =
-				max(min_sampling_rate,
-				    latency * LATENCY_MULTIPLIER);
-
+		
+                    	 min_sampling_rate = 10000;
+                        dbs_tuners_ins.sampling_rate = 10000;
 			cpufreq_register_notifier(
 					&dbs_cpufreq_notifier_block,
 					CPUFREQ_TRANSITION_NOTIFIER);
